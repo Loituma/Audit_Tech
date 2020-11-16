@@ -1,17 +1,153 @@
+!function (t) {
+    var e = t.fn.navDropdown, n = {ESC: 27, LEFT: 37, UP: 38, RIGHT: 39, DOWN: 40}, o = {XS: 544, SM: 768, MD: 992, LG: 1200, XL: 1 / 0}, r = function () {
+        function e(e, n) {
+            "length" in e || (e = [e]), this.props = {}, this.length = e.length, n && (this.prevItem = n, t.extend(this.props, n.props));
+            for (var o = 0; o < e.length; o++) this[o] = e[o]
+        }
 
-(function(c){var l=c.fn.navDropdown,g={ESC:27,LEFT:37,UP:38,RIGHT:39,DOWN:40},m={XS:544,SM:768,MD:992,LG:1200,XL:Infinity},h=function(){function a(a,d){"length"in a||(a=[a]);this.props={};this.length=a.length;d&&(this.prevItem=d,c.extend(this.props,d.props));for(var e=0;e<a.length;e++)this[e]=a[e]}a.prototype.eq=function(b){return new a(this[b]?this[b]:[],this)};a.prototype.parent=function(){return new a(c(this).map(function(){var b=new a(this);return b.is(":upper")?null:c(b.is(":toggle")?this.parentNode.parentNode:
-this).closest(".dropdown").find('>[data-toggle="dropdown-submenu"]')[0]}),this)};a.prototype.parents=function(b){var d=c(this).map(function(){return(new a(this)).is(":toggle")?this.parentNode:this}).parentsUntil(".nav-dropdown",".dropdown");":upper"===b&&(d=d.last());d=d.find('>[data-toggle="dropdown-submenu"]');return new a(d,this)};a.prototype.children=function(b){var d=[];c(this).each(function(){var e,f=new a(this);if(f.is(":root"))e=c(this);else if(f.is(":toggle"))e=c(this).parent().find(">.dropdown-menu");
-else return;(b?e.find("a"):f.is(":root")?e.find(">li>a"):e.find(">a, >.dropdown>a")).each(function(){b&&!this.offsetWidth&&!this.offsetHeight||this.disabled||c(this).is("[data-button]")||c(this).hasClass("disabled")||~c.inArray(this,d)||d.push(this)})});return new a(d,this)};a.prototype.root=function(){return new a(c(this).closest(".nav-dropdown"),this)};a.prototype.jump=function(b){b=b||"next";if(!this.length)return new a([],this);var d;d=this.eq(0);d=this.is(":flat")||d.is(":upper")?d.root().children(this.is(":flat")):
-d.parent().children();var e=c.inArray(this[0],d);if(!d.length||!~e)return new a([],this);if("next"==b){e+=1;if(e<d.length)return new a(d[e],this);b="first"}else if("prev"==b){--e;if(0<=e)return new a(d[e],this);b="last"}return"first"==b?new a(d[0],this):"last"==b?new a(d[d.length-1],this):new a([],this)};a.prototype.next=function(){return this.jump("next")};a.prototype.prev=function(){return this.jump("prev")};a.prototype.first=function(){return this.jump("first")};a.prototype.last=function(){return this.jump("last")};
-a.prototype.prop=function(a,d){return arguments.length?1<arguments.length?(this.props[a]=d,this):"object"==typeof arguments[0]?(c.extend(this.props,arguments[0]),this):a in this.props?this.props[a]:null:c.extend({},this.props)};a.prototype.removeProp=function(a){delete this.props[a];return this};a.prototype.is=function(a){for(var d=c(this),e=(a||"").split(/(?=[*#.\[:\s])/);a=e.pop();)switch(a){case ":root":if(!d.is(".nav-dropdown"))return!1;break;case ":upper":if(!d.parent().parent().is(".nav-dropdown"))return!1;
-break;case ":opened":case ":closed":if(":opened"==a!=d.parent().hasClass("open"))return!1;case ":toggle":if(!d.is('[data-toggle="dropdown-submenu"]'))return!1;break;default:if(!this.props[a])return!1}return!0};a.prototype.open=function(){this.is(":closed")&&this.click();return this};a.prototype.close=function(){this.is(":opened")&&this.click();return this};a.prototype.focus=function(){this.length&&this[0].focus();return this};a.prototype.click=function(){this.length&&c(this[0]).trigger("click");return this};
-return function(b){return new a(b)}}(),f=function(a){this._element=a;c(this._element).on("click.bs.nav-dropdown",this.toggle)};f.prototype.toggle=function(a){if(this.disabled||c(this).hasClass("disabled"))return!1;a=c(this.parentNode);var b=a.hasClass("open"),d=f._isCollapsed(c(this).closest(".nav-dropdown"));f._clearMenus(c.Event("click",{target:this,data:{toggles:d?[this]:null}}));if(b)return!1;"ontouchstart"in document.documentElement&&!a.closest(".dropdown.open").length&&(b=document.createElement("div"),
-b.className="dropdown-backdrop",c(b).insertBefore(c(this).closest(".nav-dropdown")),c(b).on("click",f._clearMenus));b={relatedTarget:this};d=c.Event("show.bs.nav-dropdown",b);a.trigger(d);if(d.isDefaultPrevented())return!1;this.focus();this.setAttribute("aria-expanded","true");a.toggleClass("open");a.trigger(c.Event("shown.bs.nav-dropdown",b));return!1};f.prototype.dispose=function(){c.removeData(this._element,"bs.nav-dropdown");c(this._element).off(".bs.nav-dropdown");this._element=null};f._clearMenus=
-function(a){a=a||{};if(3!==a.which){var b,d=function(){return!1};if(a.target){if(this===document)if(c(a.target).is("a:not([disabled], .disabled)"))b=c.Event("collapse.bs.nav-dropdown",{relatedTarget:a.target});else{var e=a.targetWrapper&&c(a.targetWrapper).find(".nav-dropdown")||c(a.target).closest(".nav-dropdown");if(f._isCollapsed(e))return}else if(c(a.target).hasClass("dropdown-backdrop")&&(e=c(a.target).next(),e.is(".nav-dropdown")&&f._isCollapsed(e)))return;c(a.target).is('[data-toggle="dropdown-submenu"]')?
-d=c(a.target.parentNode).parents(".dropdown").find('>[data-toggle="dropdown-submenu"]'):c(".dropdown-backdrop").remove()}d=a.data&&a.data.toggles&&c(a.data.toggles).parent().find('[data-toggle="dropdown-submenu"]')||c.makeArray(c('[data-toggle="dropdown-submenu"]').not(d));for(e=0;e<d.length;e++){var g=d[e].parentNode,h={relatedTarget:d[e]};if(c(g).hasClass("open")&&("click"!==a.type||!/input|textarea/i.test(a.target.tagName)||!c.contains(g,a.target))){var k=c.Event("hide.bs.nav-dropdown",h);c(g).trigger(k);
-k.isDefaultPrevented()||(d[e].setAttribute("aria-expanded","false"),c(g).removeClass("open").trigger(c.Event("hidden.bs.nav-dropdown",h)))}}b&&c(document).trigger(b)}};f._dataApiKeydownHandler=function(a){if(!/input|textarea/i.test(a.target.tagName)){var b,d;for(d in g)if(b=g[d]===a.which)break;b&&(a.preventDefault(),a.stopPropagation(),a.which==g.ESC?f._isCollapsed(this)||(a=c(a.target).parents(".dropdown.open").last().find('>[data-toggle="dropdown-submenu"]'),f._clearMenus(),a.trigger("focus")):
-"A"==a.target.tagName&&(b=h(a.target),b.prop(":flat",f._isCollapsed(b.root())),b.is(":flat")?a.which===g.DOWN||a.which===g.UP?b[a.which===g.UP?"prev":"next"]().focus():a.which===g.LEFT?b.is(":opened")?b.close():b.parent().close().focus():a.which===g.RIGHT&&b.is(":toggle")&&b.open():b.is(":upper")?a.which===g.LEFT||a.which===g.RIGHT?(b[a.which===g.LEFT?"prev":"next"]().focus().open(),b.is(":toggle")&&b.close()):a.which!==g.DOWN&&a.which!==g.UP||!b.is(":toggle")||b.children()[a.which===g.DOWN?"first":
-"last"]().focus():a.which===g.LEFT?(a=b.parent(),a.is(":upper")?a.close().prev().focus().open():a.focus().close()):a.which===g.RIGHT?(a=b.children(),a.length?(b.open(),a.first().focus()):b.parents(":upper").close().next().focus().open()):a.which!==g.DOWN&&a.which!==g.UP||b[a.which===g.UP?"prev":"next"]().focus()))}};f._isCollapsed=function(a){var b;a.length&&(a=a[0]);return a&&(b=/navbar-toggleable-(xs|sm|md|lg|xl)/.exec(a.className))&&window.innerWidth<m[b[1].toUpperCase()]};f._dataApiResizeHandler=
-function(){c(".nav-dropdown").each(function(){var a=f._isCollapsed(this);c(this).find(".dropdown").removeClass("open");c(this).find('[aria-expanded="true"]').attr("aria-expanded","false");var b=c(".dropdown-backdrop")[0];b&&b.parentNode.removeChild(b);a!=c(this).hasClass("nav-dropdown-sm")&&(a?c(this).addClass("nav-dropdown-sm"):c(this).removeClass("nav-dropdown-sm"))})};c.fn.navDropdown=function(a){return this.each(function(){var b=c(this).data("bs.nav-dropdown");b||c(this).data("bs.nav-dropdown",
-b=new f(this));if("string"===typeof a){if(void 0===b[a])throw Error('No method named "'+a+'"');b[a].call(this)}})};c.fn.navDropdown.noConflict=function(){c.fn.navDropdown=l;return this};c.fn.navDropdown.Constructor=f;c.fn.navDropdown.$$=h;c(window).on("resize.bs.nav-dropdown.data-api ready.bs.nav-dropdown.data-api",f._dataApiResizeHandler);c(document).on("keydown.bs.nav-dropdown.data-api",".nav-dropdown",f._dataApiKeydownHandler).on("collapse.bs.navbar-dropdown",f._clearMenus).on("click.bs.nav-dropdown.data-api",
-f._clearMenus).on("click.bs.nav-dropdown.data-api",'[data-toggle="dropdown-submenu"]',f.prototype.toggle).on("click.bs.nav-dropdown.data-api",".dropdown form",function(a){a.stopPropagation()});c(window).trigger("ready.bs.nav-dropdown")})(jQuery);
+        return e.prototype.eq = function (t) {
+            return new e(this[t] ? this[t] : [], this)
+        }, e.prototype.parent = function () {
+            return new e(t(this).map(function () {
+                var n = new e(this);
+                return n.is(":upper") ? null : t(n.is(":toggle") ? this.parentNode.parentNode : this).closest(".dropdown").find('>[data-toggle="dropdown-submenu"]')[0]
+            }), this)
+        }, e.prototype.parents = function (n) {
+            var o = t(this).map(function () {
+                return new e(this).is(":toggle") ? this.parentNode : this
+            }).parentsUntil(".nav-dropdown", ".dropdown");
+            return ":upper" === n && (o = o.last()), o = o.find('>[data-toggle="dropdown-submenu"]'), new e(o, this)
+        }, e.prototype.children = function (n) {
+            var o = [];
+            return t(this).each(function () {
+                var r, s = new e(this);
+                if (s.is(":root")) r = t(this); else {
+                    if (!s.is(":toggle")) return;
+                    r = t(this).parent().find(">.dropdown-menu")
+                }
+                (n ? r.find("a") : s.is(":root") ? r.find(">li>a") : r.find(">a, >.dropdown>a")).each(function () {
+                    n && !this.offsetWidth && !this.offsetHeight || this.disabled || t(this).is("[data-button]") || t(this).hasClass("disabled") || ~t.inArray(this, o) || o.push(this)
+                })
+            }), new e(o, this)
+        }, e.prototype.root = function () {
+            return new e(t(this).closest(".nav-dropdown"), this)
+        }, e.prototype.jump = function (n) {
+            if (n = n || "next", !this.length) return new e([], this);
+            var o;
+            o = this.eq(0), o = this.is(":flat") || o.is(":upper") ? o.root().children(this.is(":flat")) : o.parent().children();
+            var r = t.inArray(this[0], o);
+            if (!o.length || !~r) return new e([], this);
+            if ("next" == n) {
+                if (r += 1, r < o.length) return new e(o[r], this);
+                n = "first"
+            }
+            else if ("prev" == n) {
+                if (--r, r >= 0) return new e(o[r], this);
+                n = "last"
+            }
+            return "first" == n ? new e(o[0], this) : "last" == n ? new e(o[o.length - 1], this) : new e([], this)
+        }, e.prototype.next = function () {
+            return this.jump("next")
+        }, e.prototype.prev = function () {
+            return this.jump("prev")
+        }, e.prototype.first = function () {
+            return this.jump("first")
+        }, e.prototype.last = function () {
+            return this.jump("last")
+        }, e.prototype.prop = function (e, n) {
+            return arguments.length ? 1 < arguments.length ? (this.props[e] = n, this) : "object" == typeof arguments[0] ? (t.extend(this.props, arguments[0]), this) : e in this.props ? this.props[e] : null : t.extend({}, this.props)
+        }, e.prototype.removeProp = function (t) {
+            return delete this.props[t], this
+        }, e.prototype.is = function (e) {
+            for (var n = t(this), o = (e || "").split(/(?=[*#.\[:\s])/); e = o.pop();) switch (e) {
+                case":root":
+                    if (!n.is(".nav-dropdown")) return !1;
+                    break;
+                case":upper":
+                    if (!n.parent().parent().is(".nav-dropdown")) return !1;
+                    break;
+                case":opened":
+                case":closed":
+                    if (":opened" == e != n.parent().hasClass("open")) return !1;
+                case":toggle":
+                    if (!n.is('[data-toggle="dropdown-submenu"]')) return !1;
+                    break;
+                default:
+                    if (!this.props[e]) return !1
+            }
+            return !0
+        }, e.prototype.open = function () {
+            return this.is(":closed") && this.click(), this
+        }, e.prototype.close = function () {
+            return this.is(":opened") && this.click(), this
+        }, e.prototype.focus = function () {
+            return this.length && this[0].focus(), this
+        }, e.prototype.click = function () {
+            return this.length && t(this[0]).trigger("click"), this
+        }, function (t) {
+            return new e(t)
+        }
+    }(), s = function (e) {
+        this._element = e, t(this._element).on("click.bs.nav-dropdown", this.toggle)
+    };
+    s.prototype.toggle = function (e) {
+        if (this.disabled || t(this).hasClass("disabled")) return !1;
+        e = t(this.parentNode);
+        var n = e.hasClass("open"), o = s._isCollapsed(t(this).closest(".nav-dropdown"));
+        return s._clearMenus(t.Event("click", {
+            target: this,
+            data: {toggles: o ? [this] : null}
+        })), n ? !1 : ("ontouchstart" in document.documentElement && !e.closest(".dropdown.open").length && (n = document.createElement("div"), n.className = "dropdown-backdrop", t(n).insertBefore(t(this).closest(".nav-dropdown")), t(n).on("click", s._clearMenus)), n = {relatedTarget: this}, o = t.Event("show.bs.nav-dropdown", n), e.trigger(o), o.isDefaultPrevented() ? !1 : (this.focus(), this.setAttribute("aria-expanded", "true"), e.toggleClass("open"), e.trigger(t.Event("shown.bs.nav-dropdown", n)), !1))
+    }, s.prototype.dispose = function () {
+        t.removeData(this._element, "bs.nav-dropdown"), t(this._element).off(".bs.nav-dropdown"), this._element = null
+    }, s._clearMenus = function (e) {
+        if (e = e || {}, 3 !== e.which) {
+            var n, o = function () {
+                return !1
+            };
+            if (e.target) {
+                if (this === document) if (t(e.target).is("a:not([disabled], .disabled)")) n = t.Event("collapse.bs.nav-dropdown", {relatedTarget: e.target}); else {
+                    var r = e.targetWrapper && t(e.targetWrapper).find(".nav-dropdown") || t(e.target).closest(".nav-dropdown");
+                    if (s._isCollapsed(r)) return
+                } else if (t(e.target).hasClass("dropdown-backdrop") && (r = t(e.target).next(), r.is(".nav-dropdown") && s._isCollapsed(r))) return;
+                t(e.target).is('[data-toggle="dropdown-submenu"]') ? o = t(e.target.parentNode).parents(".dropdown").find('>[data-toggle="dropdown-submenu"]') : t(".dropdown-backdrop").remove()
+            }
+            for (o = e.data && e.data.toggles && t(e.data.toggles).parent().find('[data-toggle="dropdown-submenu"]') || t.makeArray(t('[data-toggle="dropdown-submenu"]').not(o)), r = 0; r < o.length; r++) {
+                var i = o[r].parentNode, a = {relatedTarget: o[r]};
+                if (t(i).hasClass("open") && ("click" !== e.type || !/input|textarea/i.test(e.target.tagName) || !t.contains(i, e.target))) {
+                    var d = t.Event("hide.bs.nav-dropdown", a);
+                    t(i).trigger(d), d.isDefaultPrevented() || (o[r].setAttribute("aria-expanded", "false"), t(i).removeClass("open").trigger(t.Event("hidden.bs.nav-dropdown", a)))
+                }
+            }
+            n && t(document).trigger(n)
+        }
+    }, s._dataApiKeydownHandler = function (e) {
+        if (!/input|textarea/i.test(e.target.tagName)) {
+            var o, i;
+            for (i in n) if (o = n[i] === e.which) break;
+            o && (e.preventDefault(), e.stopPropagation(), e.which == n.ESC ? s._isCollapsed(this) || (e = t(e.target).parents(".dropdown.open").last().find('>[data-toggle="dropdown-submenu"]'), s._clearMenus(), e.trigger("focus")) : "A" == e.target.tagName && (o = r(e.target), o.prop(":flat", s._isCollapsed(o.root())), o.is(":flat") ? e.which === n.DOWN || e.which === n.UP ? o[e.which === n.UP ? "prev" : "next"]().focus() : e.which === n.LEFT ? o.is(":opened") ? o.close() : o.parent().close().focus() : e.which === n.RIGHT && o.is(":toggle") && o.open() : o.is(":upper") ? e.which === n.LEFT || e.which === n.RIGHT ? (o[e.which === n.LEFT ? "prev" : "next"]().focus().open(), o.is(":toggle") && o.close()) : e.which !== n.DOWN && e.which !== n.UP || !o.is(":toggle") || o.children()[e.which === n.DOWN ? "first" : "last"]().focus() : e.which === n.LEFT ? (e = o.parent(), e.is(":upper") ? e.close().prev().focus().open() : e.focus().close()) : e.which === n.RIGHT ? (e = o.children(), e.length ? (o.open(), e.first().focus()) : o.parents(":upper").close().next().focus().open()) : e.which !== n.DOWN && e.which !== n.UP || o[e.which === n.UP ? "prev" : "next"]().focus()))
+        }
+    }, s._isCollapsed = function (t) {
+        var e;
+        return t.length && (t = t[0]), t && (e = /navbar-toggleable-(xs|sm|md|lg|xl)/.exec(t.className)) && window.innerWidth < o[e[1].toUpperCase()]
+    }, s._dataApiResizeHandler = function () {
+        t(".nav-dropdown").each(function () {
+            var e = s._isCollapsed(this);
+            t(this).find(".dropdown").removeClass("open"), t(this).find('[aria-expanded="true"]').attr("aria-expanded", "false");
+            var n = t(".dropdown-backdrop")[0];
+            n && n.parentNode.removeChild(n), e != t(this).hasClass("nav-dropdown-sm") && (e ? t(this).addClass("nav-dropdown-sm") : t(this).removeClass("nav-dropdown-sm"))
+        })
+    }, t.fn.navDropdown = function (e) {
+        return this.each(function () {
+            var n = t(this).data("bs.nav-dropdown");
+            if (n || t(this).data("bs.nav-dropdown", n = new s(this)), "string" == typeof e) {
+                if (void 0 === n[e]) throw Error('No method named "' + e + '"');
+                n[e].call(this)
+            }
+        })
+    }, t.fn.navDropdown.noConflict = function () {
+        return t.fn.navDropdown = e, this
+    }, t.fn.navDropdown.Constructor = s, t.fn.navDropdown.$$ = r, t(window).on("resize.bs.nav-dropdown.data-api ready.bs.nav-dropdown.data-api", s._dataApiResizeHandler), t(document).on("keydown.bs.nav-dropdown.data-api", ".nav-dropdown", s._dataApiKeydownHandler).on("collapse.bs.navbar-dropdown", s._clearMenus).on("click.bs.nav-dropdown.data-api", s._clearMenus).on("click.bs.nav-dropdown.data-api", '[data-toggle="dropdown-submenu"]', s.prototype.toggle).on("click.bs.nav-dropdown.data-api", ".dropdown form", function (t) {
+        t.stopPropagation()
+    }), t(window).trigger("ready.bs.nav-dropdown")
+}(jQuery);
